@@ -1,0 +1,22 @@
+node_modules/
+library/
+temp/
+local/
+profiles/
+build/
+dist/
+.DS_Store
+
+# Local generation records, QA captures, and intermediate working files.
+/evidence/
+/work/
+__pycache__/
+*.py[cod]
+
+# Local credentials and environment overrides.
+.env
+.env.*
+!.env.example
+*.pem
+*.key
+*.p12

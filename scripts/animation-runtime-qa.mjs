@@ -1,0 +1,46 @@
+// Isolated CDP regression fixtures. Final gameplay clip is captured separately with ordinary inputs.
+import fs from 'node:fs';
+import {setTimeout as delay} from 'node:timers/promises';
+const out=new URL('../evidence/runtime-animation-20260923/',import.meta.url);
+const ws=new WebSocket(process.argv[2]);await new Promise((resolve,reject)=>{ws.onopen=resolve;ws.onerror=reject;});
+let next=1;const pending=new Map();
+ws.onmessage=e=>{const m=JSON.parse(e.data);if(m.id&&pending.has(m.id)){const p=pending.get(m.id);clearTimeout(p.timer);pending.delete(m.id);m.error?p.reject(Error(JSON.stringify(m.error))):p.resolve(m.result);}};
+const call=(method,params={},sessionId)=>new Promise((resolve,reject)=>{const id=next++;const timer=setTimeout(()=>reject(Error('CDP timeout '+method)),15000);pending.set(id,{resolve,reject,timer});ws.send(JSON.stringify({id,method,params,sessionId}));});
+const assert=(ok,message)=>{if(!ok)throw Error(message);};
+try{
+ const {targetInfos}=await call('Target.getTargets');const target=targetInfos.find(t=>t.type==='page'&&t.url.startsWith('http://127.0.0.1:8765'));
+ const {sessionId}=await call('Target.attachToTarget',{targetId:target.targetId,flatten:true});
+ const send=(method,params={})=>call(method,params,sessionId);
+ const evaluate=async expression=>{const r=await send('Runtime.evaluate',{expression,returnByValue:true,awaitPromise:true});if(r.exceptionDetails)throw Error(JSON.stringify(r.exceptionDetails));return r.result.value;};
+ const setup=`const cc=System.get(System.resolve('cc'));const h=cc.director.getScene().getChildByName('Game').getComponent('Emberline');`;
+ const run=body=>evaluate('(()=>{'+setup+body+'})()');
+ const state=()=>evaluate('JSON.parse(render_game_to_text())');
+ const screenshot=async name=>{const r=await send('Page.captureScreenshot',{format:'png'});fs.writeFileSync(new URL(name,out),Buffer.from(r.data,'base64'));};
+ await send('Page.reload',{ignoreCache:true});
+ let ready=false;for(let i=0;i<100;i++){if(await evaluate('window.emberlineReady===true')){ready=true;break;}await delay(100);}assert(ready,'load failed');
+ const report={type:'isolated deterministic fixtures; no modifications saved to gameplay',checks:{}};
+ await run(`h.startGame();h.sim.spawn('walker',{x:170,y:0});h.sim.spawn('brute',{x:0,y:0});h.sim.dash();`);
+ await delay(140);
+ const dash=await state();assert(dash.vfx.events.dash===1&&dash.vfx.events.afterimage>0,'dash afterimage missing');report.checks.dash=dash.vfx;
+ await screenshot('dash.png');
+ await run(`h.sim.invulnerable=0;h.sim.spawn('brute',{x:h.sim.x,y:h.sim.y});`);
+ await delay(100);
+ const attack=await state();assert(attack.animation.actions.attack>0&&attack.vfx.events.hurt>0,'contact attack feedback missing');report.checks.attack=attack.animation;
+ await screenshot('attack.png');
+ await run(`h.sim.pause();`);const paused=await state();await delay(450);const pausedLater=await state();
+ assert(JSON.stringify(paused)===JSON.stringify(pausedLater),'pause advances animation or effects');report.checks.pauseFrozen=true;
+ await run(`h.sim.pause();h.sim.enemies=[];h.sim.bullets=[];h.sim.drops=[];h.sim.spawnTimer=100;h.sim.invulnerable=10;`);
+ await delay(1200);const clean=await state();assert(clean.vfx.activeSparks===0&&clean.vfx.activeBursts===0&&clean.vfx.activeRings===0&&clean.animation.dying===0,'effects failed to expire');report.checks.effectsExpire=true;
+ await run(`h.sim.xp=h.sim.xpNext;`);await delay(80);assert((await state()).phase==='upgrade','upgrade fixture failed');
+ await run(`h.sim.selectUpgrade(0);`);await delay(100);const upgrade=await state();assert(upgrade.vfx.events.upgrade===1&&upgrade.vfx.activeRings>0,'upgrade VFX missing');report.checks.upgrade=upgrade.vfx;
+ await screenshot('upgrade-burst.png');
+ await run(`h.startGame();h.reducedMotion=true;h.sim.dash();h.sim.spawn('walker',{x:120,y:0});`);await delay(140);
+ const reduced=await state();assert(!reduced.vfx.events.afterimage,'reduced motion still spawns ghosts');report.checks.reducedMotion=true;
+ await run(`h.startGame();h.reducedMotion=false;h.sim.hp=1;h.sim.spawn('brute',{x:0,y:0});`);await delay(700);
+ const death=await state();assert(death.phase==='dead'&&death.animation.playerFrame===15,'player death did not finish');report.checks.playerDeath=death.animation;
+ await run(`h.startGame();h.sim.spawnTimer=100;h.sim.spawn('walker',{x:90,y:0});`);await delay(650);
+ const enemyDeath=await state();assert(enemyDeath.animation.actions.death>0&&enemyDeath.vfx.events.death>0,'enemy death animation missing');report.checks.enemyDeath=enemyDeath.animation;
+ await screenshot('enemy-death.png');
+ report.result='passed';fs.writeFileSync(new URL('fixture-report.json',out),JSON.stringify(report,null,2));console.log(JSON.stringify(report,null,2));
+ await run('h.returnMenu();');
+}finally{ws.close();}

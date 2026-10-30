@@ -1,0 +1,22 @@
+{
+  "name": "emberline-survivors",
+  "version": "0.2.1",
+  "private": true,
+  "description": "余烬防线 — Cocos Creator zombie survival roguelite",
+  "creator": {
+    "version": "3.8.6"
+  },
+  "uuid": "8f52d301-a68c-40a1-baa2-65ce4fb62b24",
+  "scripts": {
+    "test": "node --experimental-strip-types --test tests/*.test.mjs",
+    "build": "bash scripts/build.sh",
+    "preview": "python3 scripts/preview-server.py --port 8765 --directory build/web-desktop --bind 127.0.0.1",
+    "typecheck": "tsc --noEmit",
+    "package:desktop": "npm run build && node scripts/package-desktop.mjs",
+    "package:desktop:existing": "node scripts/package-desktop.mjs"
+  },
+  "devDependencies": {
+    "@electron/packager": "20.3.0",
+    "typescript": "~5.7.3"
+  }
+}

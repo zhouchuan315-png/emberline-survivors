@@ -1,0 +1,30 @@
+{
+  "name": "web-desktop",
+  "platform": "web-desktop",
+  "buildPath": "project://build",
+  "outputName": "web-desktop",
+  "startScene": "35c014fb-46aa-41c3-aef1-c369de4028e0",
+  "scenes": [
+    {
+      "url": "db://assets/scenes/Main.scene",
+      "uuid": "35c014fb-46aa-41c3-aef1-c369de4028e0"
+    }
+  ],
+  "debug": true,
+  "sourceMaps": true,
+  "md5Cache": false,
+  "webOrientation": "auto",
+  "embedWebDebugger": false,
+  "mainBundleCompressionType": "merge_dep",
+  "packages": {
+    "web-desktop": {
+      "resolution": {
+        "width": 1280,
+        "height": 800
+      },
+      "polyfills": {
+        "asyncFunctions": true
+      }
+    }
+  }
+}

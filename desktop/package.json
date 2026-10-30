@@ -1,0 +1,8 @@
+{
+  "name": "emberline-survivors-desktop",
+  "productName": "Emberline Survivors",
+  "version": "0.2.1",
+  "private": true,
+  "description": "Emberline Survivors offline desktop game",
+  "main": "main.cjs"
+}

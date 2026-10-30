@@ -1,0 +1,85 @@
+// Procedural, additive ground light. Time comes from the simulation's visual
+// delta, never cc_time: pauses and upgrade selection must freeze the shader.
+CCEffect %{
+  techniques:
+  - passes:
+    - vert: aura-vs:vert
+      frag: aura-fs:frag
+      depthStencilState:
+        depthTest: false
+        depthWrite: false
+      blendState:
+        targets:
+        - blend: true
+          blendSrc: src_alpha
+          blendDst: one
+          blendSrcAlpha: zero
+          blendDstAlpha: one
+      rasterizerState:
+        cullMode: none
+      properties:
+        auraParams: { value: [0, 0, 0, 0] }
+        auraTint: { value: [1, 0.63, 0.22, 0] }
+}%
+
+CCProgram aura-vs %{
+  precision highp float;
+  #include <builtin/uniforms/cc-global>
+  #if USE_LOCAL
+    #include <builtin/uniforms/cc-local>
+  #endif
+  in vec3 a_position;
+  in vec2 a_texCoord;
+  in vec4 a_color;
+  out vec2 uv0;
+  out vec4 color;
+  vec4 vert () {
+    vec4 pos = vec4(a_position, 1.0);
+    #if USE_LOCAL
+      pos = cc_matWorld * pos;
+    #endif
+    uv0 = a_texCoord;
+    color = a_color;
+    return cc_matViewProj * pos;
+  }
+}%
+
+CCProgram aura-fs %{
+  precision highp float;
+  in vec2 uv0;
+  in vec4 color;
+  uniform Aura {
+    vec4 auraParams;
+    vec4 auraTint;
+  };
+
+  vec4 frag () {
+    vec2 p = (uv0 - 0.5) * 2.0;
+    float radius = length(p);
+    float angle = atan(p.y, p.x + 0.000001);
+    float time = auraParams.x;
+    float power = auraParams.z;
+    float surge = auraParams.w;
+    float motion = 1.0 - auraTint.w;
+    float orbit = angle * 2.0 - time * 1.65 * motion;
+    float flow = mix(0.58, 1.0, smoothstep(-0.4, 0.96, sin(orbit)));
+    float distanceToRing = abs(radius - 0.62);
+    float core = 1.0 - smoothstep(0.012, 0.029, distanceToRing);
+    float halo = exp(-distanceToRing * distanceToRing * 220.0);
+    float innerDistance = (radius - 0.49) * 60.0;
+    float inner = exp(-innerDistance * innerDistance);
+    float arcs = smoothstep(0.25, 0.98, sin(angle * 3.0 + time * 1.2 * motion));
+    float breath = 0.96 + 0.04 * sin(time * 2.8) * motion;
+
+    // A single soft activation wave; the stable ring never changes radius.
+    float waveRadius = 0.42 + (1.0 - surge) * 0.42;
+    float waveDistance = (radius - waveRadius) * 32.0;
+    float wave = exp(-waveDistance * waveDistance) * surge * 0.5;
+    float density = (core * 0.7 + halo * (0.2 + power * 0.16)) * flow;
+    density += inner * arcs * (0.12 + power * 0.25) + wave;
+    // Empty centre and transparent margin protect the feet and prevent a quad edge.
+    density *= smoothstep(0.30, 0.43, radius) * (1.0 - smoothstep(0.87, 0.98, radius));
+    vec3 light = mix(auraTint.rgb, vec3(1.0, 0.92, 0.65), core * flow * 0.58);
+    return vec4(light, clamp(density * auraParams.y * breath, 0.0, 0.9) * color.a);
+  }
+}%
