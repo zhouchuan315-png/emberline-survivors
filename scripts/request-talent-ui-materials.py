@@ -1,4 +1,5 @@
 """Submit the approved talent-tree UI art batch using the current V2 contract."""
+import os
 import datetime
 import hashlib
 import json
@@ -9,7 +10,7 @@ import jsonschema
 
 ROOT = Path(__file__).resolve().parents[1]
 EVIDENCE = ROOT / "evidence/materials-20260929-talent-ui"
-BASE = "https://api-test-new-v2.fxbusiness.cn:30685/ability-agent/api/v2/material-generation"
+BASE = os.environ.get('MATERIAL_API_BASE', 'https://example.invalid/ability-agent/api/v2/material-generation')
 
 STYLE = (
     "Production 2D game UI asset for Emberline Survivors, a hand-painted graphic-novel "

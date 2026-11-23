@@ -5,10 +5,10 @@ const { execFileSync } = require('node:child_process');
 const { createHash } = require('node:crypto');
 let playwright, PNG;
 try { playwright = require('playwright'); } catch {
-  playwright = require(process.env.PLAYWRIGHT_PATH || '/Users/xm/.cache/codex-runtimes/codex-primary-runtime/dependencies/node/node_modules/playwright');
+  playwright = require(process.env.PLAYWRIGHT_PATH || 'playwright');
 }
 try { ({ PNG } = require('pngjs')); } catch {
-  ({ PNG } = require('/Users/xm/.cache/codex-runtimes/codex-primary-runtime/dependencies/node/node_modules/pngjs'));
+  ({ PNG } = require(process.env.PNGJS_PATH || 'pngjs'));
 }
 
 const root = path.resolve(__dirname, '..');

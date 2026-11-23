@@ -1,10 +1,11 @@
 """Single-pose correction for rejected nearly identical walk-sheet frames."""
+import os
 from pathlib import Path
 import datetime, hashlib, json, urllib.request
 import jsonschema
 ROOT=Path(__file__).resolve().parents[1]
 E=ROOT/'evidence/materials-20260923-animation/gait-correction'
-BASE='https://api-test-new-v2.fxbusiness.cn:30685/ability-agent/api/v2/material-generation'
+BASE = os.environ.get('MATERIAL_API_BASE', 'https://example.invalid/ability-agent/api/v2/material-generation')
 s=json.loads((E/'material-schema.json').read_text())['result']
 schema={**s['json_schema'],'properties':{**s['json_schema']['properties'],**s['common_fields']}}
 ss=json.loads((E.parent/'static-image-schema.json').read_text())['result']

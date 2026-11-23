@@ -1,4 +1,5 @@
 """One recorded submission using the refreshed Apifox and live material schema."""
+import os
 import datetime
 import hashlib
 import json
@@ -9,7 +10,7 @@ import jsonschema
 
 ROOT = Path(__file__).resolve().parents[1]
 OUT = ROOT / 'evidence/materials-20260928-barrage'
-BASE = 'https://api-test-new-v2.fxbusiness.cn:30685/ability-agent/api/v2/material-generation'
+BASE = os.environ.get('MATERIAL_API_BASE', 'https://example.invalid/ability-agent/api/v2/material-generation')
 
 def get(route):
     with urllib.request.urlopen(BASE + route, timeout=40) as response:

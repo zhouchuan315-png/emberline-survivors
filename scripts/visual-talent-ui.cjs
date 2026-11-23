@@ -2,7 +2,7 @@ const path=require('node:path');
 const fs=require('node:fs');
 const assert=require('node:assert/strict');
 const {createHash}=require('node:crypto');
-const pw=require(process.env.PLAYWRIGHT_PATH||'/Users/xm/.cache/codex-runtimes/codex-primary-runtime/dependencies/node/node_modules/playwright');
+const pw=require(process.env.PLAYWRIGHT_PATH || 'playwright');
 const url=process.env.GAME_URL||'http://127.0.0.1:8765/__preview/18df2026092911/?v=talent-ui-20260929';
 const out=path.resolve(process.env.QA_OUT||'evidence/runtime-hero-talents-20260929/ui');fs.mkdirSync(out,{recursive:true});
 (async()=>{

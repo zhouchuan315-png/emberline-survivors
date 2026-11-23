@@ -2,7 +2,7 @@
 
 “闪避布雷”已换成生成的金属感应雷素材，带连续布防亮灯和待机呼吸动画，升级卡显示同款地雷。冲刺布雷后引诱追兵触发爆炸。新素材、生成过程与预览见 `evidence/materials-20260929-mines/`；桌面 / 手机实机报告见 `evidence/runtime-mines-20260929/`。
 
-基于 **Cocos Creator 3.8.6 + TypeScript** 的单人打僵尸生存肉鸽原型。游戏目录：`/Users/xm/mycode/emberline-survivors`。
+基于 **Cocos Creator 3.8.6 + TypeScript** 的单人打僵尸生存肉鸽原型。游戏目录：`emberline-survivors`。
 
 选择普通、困难或噩梦战区，坚守 12 / 16 / 20 波并消灭最终感染源并清理剩余精英后撤离。击杀、完成波次和胜利获得金币，金币按当前奖励的 68% 累计以提高局外成长难度；失败保留已赚金币。每个角色拥有独立天赋树，可在营地用金币解锁，另有独立的开局道具页；旧商店通用天赋已移除。每局重新抽取升级组合，局内强化在结束后清空，永久成长保存在本机。
 
@@ -33,7 +33,7 @@
 ## 构建与试玩
 
 ```bash
-cd /Users/xm/mycode/emberline-survivors
+cd emberline-survivors
 npm install
 npm test
 npm run build
@@ -244,3 +244,24 @@ Windows 完整解压后运行 `EmberlineSurvivors.exe`；Mac 解压后将 `Ember
 升级卡显示联动提示；升级 / 暂停时可点击联动图鉴或按 Tab 查看所需阶数、完成度及效果。图鉴不推进模拟。战斗中仅添加脚下护盾细条、地雷小标记和敌人三格猎首标记；不新增遮挡战场的大面板。所有范围伤害、跳弹、清弹遵守场景碰撞视线。沿用现有特效与图标，无远端素材提交。
 
 规则测试 `tests/buildcraft.test.mjs`；实际 Cocos 导出脚本 `scripts/buildcraft-runtime-qa.cjs`。本轮从 9 月 28 日开始，证据沿用 `evidence/runtime-buildcraft-20260928/`；试玩链接使用新的 `v=buildcraft-20260929`。本轮不重新打包历史桌面 ZIP。
+
+## 可选环境变量
+
+仓库中的素材生成与浏览器验收脚本不再硬编码私有服务地址或本机路径，可用以下环境变量覆盖：
+
+| 变量 | 用途 | 默认值 |
+|---|---|---|
+| `MATERIAL_API_BASE` | 素材生成服务地址（仅开发脚本使用，运行游戏不需要） | `https://example.invalid/ability-agent/api/v2/material-generation` |
+| `PLAYWRIGHT_PATH` | Playwright 模块路径 | 从 `node_modules` 加载 |
+| `PLAYWRIGHT_DEPS` | QA 脚本依赖目录 | `node_modules` |
+| `PNGJS_PATH` | pngjs 模块路径 | 从 `node_modules` 加载 |
+| `CREATOR_BIN` | Cocos Creator 可执行文件 | macOS 默认安装路径 |
+| `GAME_URL` | 浏览器验收目标地址 | `http://127.0.0.1:8765` |
+
+## 贡献
+
+欢迎提交 Issue 和 Pull Request。修改游戏规则后请运行 `npm test`；修改表现层代码后请运行 `npm run typecheck`、`npm run build`，并对实际 Web 导出做浏览器验证。
+
+## 开源许可
+
+本项目采用 [MIT License](LICENSE) 授权，源代码与仓库内素材均按该许可证提供。素材生成服务的历史批次记录、Schema 与验收证据保留在开发流程文档中，但不属于运行本项目的必需文件。

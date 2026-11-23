@@ -1,9 +1,10 @@
 """Frozen expansion batch. Query Apifox/runtime schemas before using; never retry POST."""
+import os
 import json,hashlib,datetime,urllib.request
 from pathlib import Path
 import jsonschema
 R=Path(__file__).resolve().parents[1];E=R/'evidence/materials-20260924-expansion'
-BASE='https://api-test-new-v2.fxbusiness.cn:30685/ability-agent/api/v2/material-generation'
+BASE = os.environ.get('MATERIAL_API_BASE', 'https://example.invalid/ability-agent/api/v2/material-generation')
 STYLE='Premium hand-painted 2D zombie survival game, gritty graphic novel ink outlines, charcoal olive mustard rust palette, controlled highlights, NOT pixel art, NOT 3D. No words letters logos labels watermark. '
 GRID='Exactly 4 by 4 regular equal square cells, 16 cells, NO border or grid lines, each subject centered with generous clear margins entirely inside its cell. Pure perfectly uniform magenta #ff00ff background. No magenta on objects. '
 ACT='Same single character in every cell, same proportions, 3/4 overhead game camera, facing RIGHT in all cells. Full body entirely visible, aligned feet at the same baseline, identical scale. Row 1: four CLEARLY DISTINCT locomotion poses: left leg forward, feet passing, right leg forward, opposite passing. Row 2: four more locomotion poses continuing the cycle, unmistakable alternating legs and arms. Row 3: four attack anticipation, attack peak, follow-through, recovery poses. Row 4: four progressively collapsing death poses, last lying flat. NO static repeated stance. '

@@ -1,11 +1,12 @@
 """Poll only recorded batches, download accepted video URLs, make contact sheets."""
+import os
 from pathlib import Path
 import sys,json,urllib.request,urllib.parse,subprocess,hashlib
 from concurrent.futures import ThreadPoolExecutor
 from PIL import Image,ImageDraw
 import numpy as np
 R=Path(__file__).resolve().parents[1];E=R/'evidence/materials-20260928-fullbody-motion'
-BASE='https://api-test-new-v2.fxbusiness.cn:30685/ability-agent/api/v2/material-generation/batch/'
+BASE = os.environ.get('MATERIAL_API_BASE', 'https://example.invalid/ability-agent/api/v2/material-generation') + '/batch/'
 
 def key_image(image):
  a=np.array(image.convert('RGB')).astype(float);chroma=np.minimum(a[:,:,0],a[:,:,2])-a[:,:,1]
@@ -23,7 +24,7 @@ def poll(stage):
   if m['status']!='success':print(m['material_id'],m['error_message'],m.get('generate_result'));continue
   assert m['generate_result']['success'] and not m['generate_result']['errors'] and not m['action_results'] and m['results']
   name=m['material_id'].removeprefix('fullbody-20260928-');p=d/(name+'.mp4')
-  url=m['results'][0];assert urllib.parse.urlparse(url).hostname=='statics.fxbusiness.cn'
+  url=m['results'][0];assert urllib.parse.urlparse(url).scheme=='https'
   if not p.exists():
    with urllib.request.urlopen(url,timeout=60) as response:
     data=response.read(120*1024*1024+1);assert len(data)<120*1024*1024

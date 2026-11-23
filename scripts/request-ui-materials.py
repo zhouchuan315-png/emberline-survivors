@@ -1,11 +1,12 @@
 """One-shot UI batch using the frozen current Apifox/runtime schema. Never resend."""
+import os
 import json, hashlib, datetime, urllib.request
 from pathlib import Path
 import jsonschema
 
 ROOT = Path(__file__).resolve().parents[1]
 E = ROOT / 'evidence/materials-20260924-ui'
-BASE = 'https://api-test-new-v2.fxbusiness.cn:30685/ability-agent/api/v2/material-generation'
+BASE = os.environ.get('MATERIAL_API_BASE', 'https://example.invalid/ability-agent/api/v2/material-generation')
 STYLE = ('Production game UI asset for a hand-painted graphic-novel zombie survival game. '
          'Charcoal-black, muted army olive, weathered warm steel and restrained mustard amber. '
          'Crisp ink outlines, subtle scratches only near edges, flat orthographic front view. '

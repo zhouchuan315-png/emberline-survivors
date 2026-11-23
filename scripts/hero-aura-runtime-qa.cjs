@@ -1,6 +1,6 @@
 /** Real Cocos shader validation. All combat fixtures use disposable saves. */
 const fs=require('node:fs'),path=require('node:path'),assert=require('node:assert/strict');
-const deps='/Users/xm/.cache/codex-runtimes/codex-primary-runtime/dependencies/node/node_modules';
+const deps=process.env.PLAYWRIGHT_DEPS || 'node_modules';
 let pw,PNG;try{pw=require('playwright')}catch{pw=require(process.env.PLAYWRIGHT_PATH||deps+'/playwright')}
 try{({PNG}=require('pngjs'))}catch{({PNG}=require(deps+'/pngjs'))}
 const out=path.resolve(process.env.QA_OUT||'evidence/runtime-hero-aura-20260928');fs.mkdirSync(out,{recursive:true});

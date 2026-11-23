@@ -1,9 +1,10 @@
 """Frozen hero and boss batch; current contracts live in this round's evidence."""
+import os
 import json, hashlib, datetime, urllib.request
 from pathlib import Path
 import jsonschema
 R=Path(__file__).resolve().parents[1]; E=R/'evidence/materials-20260924-roster'
-BASE='https://api-test-new-v2.fxbusiness.cn:30685/ability-agent/api/v2/material-generation'
+BASE = os.environ.get('MATERIAL_API_BASE', 'https://example.invalid/ability-agent/api/v2/material-generation')
 STYLE='Hand-painted 2D top-down zombie roguelite, gritty graphic novel ink outlines, charcoal olive mustard rust palette. Three-quarter overhead view facing RIGHT, readable compact silhouette. NOT pixel art, NOT 3D. No text letters numbers borders watermarks. '
 GRID='Exactly 4 by 4 equal square cells on a 2048x2048 sprite sheet, 16 separate full-body poses, each inside its own 512x512 cell with at least 45px clear margin. Pure flat magenta #ff00ff background. No grid lines, no ground, no shadow. Same character design, identical scale, weapon, face and proportions in every cell. '
 RUN='First TWO rows are EIGHT consecutive frames of ONE complete RUN cycle: row1 left foot reaches forward contact, left knee compresses, right knee passes upward, airborne right knee high; row2 right foot reaches forward contact, right knee compresses, left knee passes upward, airborne left knee high. Clearly alternate legs with a flight phase, consistent feet baseline. Torso, head and held gun remain very stable, no changing aim, no rotating whole body. '

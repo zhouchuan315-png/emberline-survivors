@@ -1,6 +1,6 @@
 /** Isolated, actual Cocos export: source textures, menu touch flows and new poses. */
 const fs=require('node:fs'),path=require('node:path'),assert=require('node:assert/strict'),crypto=require('node:crypto');
-const pw=require('/Users/xm/.cache/codex-runtimes/codex-primary-runtime/dependencies/node/node_modules/playwright');
+const pw=require(process.env.PLAYWRIGHT_PATH || 'playwright');
 const out=path.resolve(process.env.QA_OUT||'evidence/runtime-anime-heroes-20260928');fs.mkdirSync(out,{recursive:true});
 const url=process.env.GAME_URL||'http://127.0.0.1:8765/__preview/18de0928ab070071/?v=anime-heroes-20260928';
 const hash=b=>crypto.createHash('sha256').update(b).digest('hex');

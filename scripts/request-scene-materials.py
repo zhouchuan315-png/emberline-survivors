@@ -1,9 +1,10 @@
 """Frozen scene-art batch. One submission; never retry an ambiguous POST."""
+import os
 import json, hashlib, datetime, urllib.request
 from pathlib import Path
 import jsonschema
 R=Path(__file__).resolve().parents[1]; E=R/'evidence/materials-20260924-scene'
-BASE='https://api-test-new-v2.fxbusiness.cn:30685/ability-agent/api/v2/material-generation'
+BASE = os.environ.get('MATERIAL_API_BASE', 'https://example.invalid/ability-agent/api/v2/material-generation')
 STYLE=('Premium hand-painted 2D zombie survival game art, gritty inked graphic novel, crisp dark outlines, desaturated charcoal and olive palette, restrained rust and amber accents. Not pixel art, not photograph, not glossy 3D render. No text, no letters, no logos, no UI, no watermark. ')
 PROP=('Exactly ONE isolated game environment prop, orthographic three-quarter overhead camera looking down at about 65 degrees; see top and a SHORT front face. Long edges HORIZONTAL, short edges VERTICAL, NOT diamond isometric, no diagonally rotated object. Entire object centered, wide generous empty margins, solid perfectly uniform pure magenta #ff00ff background. No floor, no background scenery, no cast shadow outside object, no magenta on prop. ')
 prompts={

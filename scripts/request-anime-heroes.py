@@ -1,11 +1,12 @@
 """This round only. Guarded submissions validated against freshly fetched schemas."""
+import os
 import json, hashlib, datetime, urllib.request, sys
 from pathlib import Path
 import jsonschema
 
 R=Path(__file__).resolve().parents[1]
 E=R/'evidence/materials-20260928-anime-heroes'
-BASE='https://api-test-new-v2.fxbusiness.cn:30685/ability-agent/api/v2/material-generation'
+BASE = os.environ.get('MATERIAL_API_BASE', 'https://example.invalid/ability-agent/api/v2/material-generation')
 STYLE='Production-quality original Japanese anime game character illustration, beautiful adult woman age 24, expressive large anime eyes, refined face, crisp dark line art, clean cel shading with subtle painted gradients. Stylized 5-head-tall adult game proportions, slim athletic build, NOT a child, NOT baby chibi, NOT pixel art, NOT 3D. '
 POSE='ONE single full-body character centered on pure flat saturated magenta #ff00ff background, no ground, no cast shadow, no text, no UI, no frame. Full head and both boots visible with generous margin. Three-quarter side view facing RIGHT, face visible from front-right, both hands firmly holding a compact short firearm aimed horizontally RIGHT at chest height. Calm alert standing pose, steady upright torso, hips level. Two legs visibly separated, nearly straight, parallel shins, both boots planted on the same horizontal baseline, boots pointing right. Short jacket ends at waist and does NOT cover thighs or knees. Clearly readable hips, knees and ankles, no dangling straps, no long coat or cape, no skirt. Hair stays above the waist and does not hide legs. Every hand has natural grip. Bright readable silhouette for an overhead action game. '
 DESIGNS={

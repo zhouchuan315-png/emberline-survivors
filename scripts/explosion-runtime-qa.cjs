@@ -1,5 +1,5 @@
 const fs=require('node:fs'),path=require('node:path'),assert=require('node:assert/strict'),crypto=require('node:crypto');
-let pw;try{pw=require('playwright')}catch{pw=require('/Users/xm/.cache/codex-runtimes/codex-primary-runtime/dependencies/node/node_modules/playwright')}
+let pw;try{pw=require('playwright')}catch{pw=require(process.env.PLAYWRIGHT_PATH || 'playwright')}
 const before=process.env.CAPTURE_BEFORE==='1';
 const out=path.resolve(process.env.QA_OUT||'evidence/runtime-explosion-fix-20260928/'+(before?'before':'after'));
 const url=process.env.GAME_URL||'http://127.0.0.1:8765/__preview/18de0928e0040048/?v=explosion-fix';fs.mkdirSync(out,{recursive:true});

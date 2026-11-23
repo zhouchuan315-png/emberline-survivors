@@ -1,6 +1,6 @@
 /** Fixed-timestep + real keyboard regression against the actual Cocos Web export. */
 const fs=require('node:fs'),path=require('node:path'),assert=require('node:assert/strict'),crypto=require('node:crypto');
-let pw;try{pw=require('playwright')}catch{pw=require(process.env.PLAYWRIGHT_PATH||'/Users/xm/.cache/codex-runtimes/codex-primary-runtime/dependencies/node/node_modules/playwright')}
+let pw;try{pw=require('playwright')}catch{pw=require(process.env.PLAYWRIGHT_PATH || 'playwright')}
 const out=path.resolve(process.env.QA_OUT||'evidence/runtime-roster-20260928');fs.mkdirSync(out,{recursive:true});
 const url=process.env.GAME_URL||'http://127.0.0.1:8765/__preview/18de0928a11c0016/?v=walksmooth-20260928-final';
 const report={result:'pending',url,policy:'Isolated browser profile; native keyboard input; fixed timestep on the exported component; enemy suppression only for gait observations.',heroes:{}};

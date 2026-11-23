@@ -47,9 +47,9 @@ Mac 使用 ad hoc 本地签名，不启用需要 Team ID 的 hardened library va
 运行证据 `evidence/runtime-weapon-20260924/`；`scripts/weapon-runtime-qa.cjs` 在独立浏览器中验证实际 Cocos 导出。沿用现有图片/音效，换弹与强化反馈通过程序绘制和一次性事件实现，无新增素材费用。
 
 ## 素材规范与证据
-服务规则：/Users/xm/code/game-skin-automation/shared/global-memory/material-generation-apifox-v2.md
-质量规则：/Users/xm/code/game-skin-automation/shared/global-memory/game-material-quality-rules.md
-流程参考：/Users/xm/code/game-skin-automation/shared/global-memory/evidence/material-generation-20260915
+服务规则：内部文档：素材生成 Apifox V2 规范（开源版不附带）
+质量规则：内部文档：游戏素材质量规则（开源版不附带）
+流程参考：内部流程参考（开源版不附带）
 本轮：evidence/materials-20260923；不得用历史 request 字段替代当前 Apifox 和运行时 Schema。
 动作补充轮次：evidence/materials-20260923-animation；运行证据：evidence/runtime-animation-20260923。首批重复行走帧拒绝，9 张独立关键姿势纠正；攻击/倒地和特效局部采纳，费用合计 2.86 元。
 主角跑步修正：evidence/materials-20260924-run。旧四姿势拼接步态被用户反馈重新打开验收，改为同一角色的连续关节动画烘焙；沿用素材服务产物，无新远端生成费用。

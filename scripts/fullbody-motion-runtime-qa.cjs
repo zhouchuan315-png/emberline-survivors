@@ -1,6 +1,6 @@
 /** Runtime check for the full-body locomotion and action atlases in the actual export. */
 const fs=require('node:fs'),path=require('node:path'),assert=require('node:assert/strict'),crypto=require('node:crypto');
-const pw=require('/Users/xm/.cache/codex-runtimes/codex-primary-runtime/dependencies/node/node_modules/playwright');
+const pw=require(process.env.PLAYWRIGHT_PATH || 'playwright');
 const out=path.resolve(process.env.QA_OUT||'evidence/runtime-fullbody-motion-20260928');fs.mkdirSync(out,{recursive:true});
 const url=process.env.GAME_URL||'http://127.0.0.1:8765/__preview/18df2026092801/?v=fullbody-motion-20260928';
 const hash=b=>crypto.createHash('sha256').update(b).digest('hex');

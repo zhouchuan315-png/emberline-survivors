@@ -1,6 +1,6 @@
 /** Regression for stationary reload poses overriding locomotion in the actual export. */
 const fs=require('node:fs'),path=require('node:path'),assert=require('node:assert/strict');
-const pw=require('/Users/xm/.cache/codex-runtimes/codex-primary-runtime/dependencies/node/node_modules/playwright');
+const pw=require(process.env.PLAYWRIGHT_PATH || 'playwright');
 const before=process.env.CAPTURE_BEFORE==='1';
 const out=path.resolve(process.env.QA_OUT||`evidence/runtime-reload-motion-20260928/${before?'before':'after'}`);fs.mkdirSync(out,{recursive:true});
 const url=process.env.GAME_URL||'http://127.0.0.1:8765/__preview/18df2026092803/?v=reload-motion-20260928';

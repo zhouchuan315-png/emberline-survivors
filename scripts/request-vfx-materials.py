@@ -12,7 +12,7 @@ import jsonschema
 
 ROOT = Path(__file__).resolve().parents[1]
 EVIDENCE = ROOT / "evidence" / "materials-20260928-power-vfx"
-BASE = "https://api-test-new-v2.fxbusiness.cn:30685/ability-agent/api/v2/material-generation"
+BASE = os.environ.get('MATERIAL_API_BASE', 'https://example.invalid/ability-agent/api/v2/material-generation')
 SCHEMA_PATH = EVIDENCE / "doubao-schema.json"
 
 STYLE = (

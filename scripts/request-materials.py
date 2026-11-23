@@ -1,11 +1,12 @@
 """Submit this frozen, schema-checked art batch ONCE; never auto-resubmit."""
+import os
 import json, hashlib, datetime, urllib.request
 from pathlib import Path
 import jsonschema
 
 ROOT = Path(__file__).resolve().parents[1]
 E = ROOT / 'evidence/materials-20260923'
-BASE = 'https://api-test-new-v2.fxbusiness.cn:30685/ability-agent/api/v2/material-generation'
+BASE = os.environ.get('MATERIAL_API_BASE', 'https://example.invalid/ability-agent/api/v2/material-generation')
 STYLE = ('Premium hand-painted 2D game art, gritty graphic-novel illustration, chunky readable silhouettes, '
          'crisp dark outlines, muted charcoal and olive palette with warm amber highlights. Not pixel art, '
          'not a photograph, not a 3D render. No text, no logos, no interface, no watermark. ')

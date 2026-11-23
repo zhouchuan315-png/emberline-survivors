@@ -1,6 +1,6 @@
 /** Actual Creator Web export. Fixtures run only in the isolated QA browser. */
 const fs=require('node:fs');const path=require('node:path');const assert=require('node:assert/strict');
-let pw;try{pw=require('playwright')}catch{pw=require(process.env.PLAYWRIGHT_PATH||'/Users/xm/.cache/codex-runtimes/codex-primary-runtime/dependencies/node/node_modules/playwright')}
+let pw;try{pw=require('playwright')}catch{pw=require(process.env.PLAYWRIGHT_PATH || 'playwright')}
 const out=path.resolve(process.env.QA_OUT||'evidence/runtime-weapon-latest');fs.mkdirSync(out,{recursive:true});
 class GamePage {
   constructor(page){this.page=page;this.errors=[];page.on('pageerror',e=>this.errors.push(e.message));page.on('console',m=>{if(m.type()==='error')this.errors.push(m.text())});}

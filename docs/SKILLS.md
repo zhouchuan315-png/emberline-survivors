@@ -6,11 +6,11 @@
 
 | Skill | 来源 | 适用工作 | 安装位置 |
 |---|---|---|---|
-| cocos-skill | 本机已有 | Creator 工程、场景、资源导入与构建 | /Users/xm/.codex/skills/cocos-skill |
+| cocos-skill | 本机已有 | Creator 工程、场景、资源导入与构建 | 本机 cocos-skill（可选） |
 | game-feel | https://github.com/gamedev-skills/awesome-gamedev-agent-skills/tree/main/skills/disciplines/game-feel | 枪口/命中反馈、击退、粒子和适度震屏 | .agents/skills/game-feel |
 | game-design-theory | https://github.com/pluginagentmarketplace/custom-plugin-game-developer/tree/main/skills/game-design-theory | 核心循环、奖励、难度、构筑平衡 | .agents/skills/game-design-theory |
 | game-ui-design | https://github.com/omer-metin/skills-for-antigravity/tree/main/skills/game-ui-design | HUD、菜单、升级面板、触屏可读性 | .agents/skills/game-ui-design |
-| agent-browser | 本机已有 | 验证真实 Cocos Web 导出、按键、截图与报错 | /Users/xm/.agents/skills/agent-browser |
+| agent-browser | 本机已有 | 验证真实 Cocos Web 导出、按键、截图与报错 | 本机 agent-browser skill（可选） |
 
 新增的三个 skill 均安装到本项目，不覆盖全局配置。在本项目的新任务/下一轮可发现，也可按绝对路径读取。源文件和引用保持原样；其中示例含其他引擎时只借鉴通用方法，具体实现以 Cocos API 为准。
 

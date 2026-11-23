@@ -1,5 +1,5 @@
 const fs=require('node:fs'),path=require('node:path'),assert=require('node:assert/strict'),crypto=require('node:crypto');
-const pw=require(process.env.PLAYWRIGHT_PATH||'/Users/xm/.cache/codex-runtimes/codex-primary-runtime/dependencies/node/node_modules/playwright');
+const pw=require(process.env.PLAYWRIGHT_PATH || 'playwright');
 const out=path.resolve(process.env.QA_OUT||'evidence/runtime-mines-20260929');fs.mkdirSync(out,{recursive:true});
 const url=process.env.GAME_URL||'http://127.0.0.1:8765/__preview/18df2026092902/?v=mine-art-20260929';
 const hash=b=>crypto.createHash('sha256').update(b).digest('hex');

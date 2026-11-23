@@ -1,6 +1,6 @@
 /** Exported Cocos regression: isolated profiles and explicit simulation ticks. */
 const fs=require('node:fs'),path=require('node:path'),assert=require('node:assert/strict');
-let pw;try{pw=require('playwright')}catch{pw=require(process.env.PLAYWRIGHT_PATH||'/Users/xm/.cache/codex-runtimes/codex-primary-runtime/dependencies/node/node_modules/playwright')}
+let pw;try{pw=require('playwright')}catch{pw=require(process.env.PLAYWRIGHT_PATH || 'playwright')}
 const out=path.resolve(process.env.QA_OUT||'evidence/runtime-boss-pressure-20260928');fs.mkdirSync(out,{recursive:true});
 const url=process.env.GAME_URL||'http://127.0.0.1:8765/__preview/18de0928b0550026/?v=boss-pressure-20260928-final';
 const report={result:'pending',url,checks:{},policy:'Isolated browser storage. Scheduled waves and fixed gameplay updates on the actual export; ordinary keyboard and touch input. No live profile modifications.'};

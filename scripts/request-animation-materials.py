@@ -1,11 +1,12 @@
 """One recorded batch; current Apifox/runtime schemas are frozen beside the receipt."""
+import os
 from pathlib import Path
 import datetime, hashlib, json, sys, urllib.request
 import jsonschema
 
 ROOT = Path(__file__).resolve().parents[1]
 E = ROOT / 'evidence/materials-20260923-animation'
-BASE = 'https://api-test-new-v2.fxbusiness.cn:30685/ability-agent/api/v2/material-generation'
+BASE = os.environ.get('MATERIAL_API_BASE', 'https://example.invalid/ability-agent/api/v2/material-generation')
 
 def schema(name):
     s = json.loads((E / name).read_text())['result']

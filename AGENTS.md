@@ -5,7 +5,7 @@
 - 当前三名主角已全部改为二次元女性，最新源 / 派生是 `evidence/materials-20260928-anime-heroes/` 与 `scripts/prepare-anime-heroes.py`；不要运行历史角色脚本恢复旧模型。三套基础 / 移动图集维持 UUID 与 256px 格，`*-portrait` 供选人、`cover-wide` / `cover-tall` 供首页。移动固定上身、交替支撑脚；射击使用同一模型配运行时后坐力与按新枪口锚点的火焰。枪口 / 弹道偏移只用于渲染，不能修改碰撞或伤害。验收使用 `anime-heroes-runtime-qa.cjs`、`roster-gait-runtime-qa.cjs` 与 `ui-runtime-qa.cjs`，新证据 `evidence/runtime-anime-heroes-20260928/`。桌面图标脚本使用新烬火头像，已有桌面 ZIP 不因此视为更新。
 
 - 项目使用本机 Cocos Creator 3.8.6。开始前读 `docs/DESIGN.md` 和 `README.md`。
-- Cocos 工程任务使用 `/Users/xm/.codex/skills/cocos-skill/SKILL.md`。
+- Cocos 工程任务使用 `本机 cocos-skill（可选，未随仓库提供）`。
 - 本项目专属 skills 位于 `.agents/skills/`；按需读取 `game-design-theory`、`game-feel`、`game-ui-design`，不要加载不相关引擎或联机流程。
 - 游戏规则在 `assets/scripts/core/Simulation.ts`；Cocos 适配在 `assets/scripts/Emberline.ts`。规则保持可用 Node 测试，UI 不复制规则。
 - 修改规则运行 `npm test`；修改游戏代码运行 `npm run typecheck`、`npm run build`，并对实际 Web 导出进行浏览器验证。Creator 导入生成的 `temp/` 不入库。

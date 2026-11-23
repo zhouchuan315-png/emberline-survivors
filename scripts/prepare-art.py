@@ -15,7 +15,7 @@ for m in b['materials']:
     assert not m['action_results'] and m['results']
     name=m['material_id'].rsplit('-',1)[1]
     u=m['results'][0]
-    assert urllib.parse.urlparse(u).hostname=='statics.fxbusiness.cn'
+    assert urllib.parse.urlparse(u).scheme=='https'
     raw=E/(name+'-original.jpeg')
     if not raw.exists():
         with urllib.request.urlopen(u,timeout=40) as response: data=response.read(20*1024*1024+1)

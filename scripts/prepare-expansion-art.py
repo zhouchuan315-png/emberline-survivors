@@ -10,7 +10,7 @@ for index,m in enumerate(b['materials']):
  assert m['generate_result']['success'] and not m['generate_result']['errors'] and m['results'] and not m['action_results']
  name=m['material_id'].removeprefix('emberline-expansion-20260924-');raw=E/(name+'-original.jpeg')
  if not raw.exists():
-  url=m['results'][0];assert urllib.parse.urlparse(url).scheme=='https' and urllib.parse.urlparse(url).hostname=='statics.fxbusiness.cn'
+  url=m['results'][0];assert urllib.parse.urlparse(url).scheme=='https'
   for attempt in range(3):
    try:
     with urllib.request.urlopen(url,timeout=50) as response:data=response.read(25*1024*1024)
